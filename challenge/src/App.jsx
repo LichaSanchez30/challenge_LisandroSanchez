@@ -10,7 +10,6 @@ function App() {
     const fetchCandidate = async() =>{
       try{
         const data = await Candidate('licha.sanchez.30@hotmail.com')
-        console.log(data)
         setCandidato(data)
 
       } catch(err){
@@ -22,7 +21,6 @@ function App() {
     const fetchJobsList = async() =>{
       try{
         const data = await JobsList()
-        console.log(data)
         setPositions(data)
       }catch(err){
         console.log(err.message
@@ -39,13 +37,13 @@ function App() {
       return
     }
     const payload = {
-  uuid: candidato.uuid,
-  jobId: positionId,
-  candidateId: candidato.candidateId,
-  applicationId: candidato.applicationId,
-  repoUrl
+      uuid: candidato.uuid,
+      jobId: positionId,
+      candidateId: candidato.candidateId,
+      applicationId: candidato.applicationId,
+      repoUrl
 }
-console.log("BODY QUE SE ENVÍA:", payload)
+console.log(payload)
     try{
       const result = await ApplyJob({
         uuid: candidato.uuid,
@@ -54,8 +52,7 @@ console.log("BODY QUE SE ENVÍA:", payload)
         applicationId: candidato.applicationId,
         repoUrl
     })
-
-    console.log(result)
+    result
     alert("Postulación enviada correctamente")
     
     }catch(err){
