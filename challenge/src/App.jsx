@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Candidate, JobsList, applyJob } from './api/api'
+import { Candidate, JobsList, ApplyJob } from './api/api'
 import PositionsList from './components/positionList'
 import './App.css'
 
@@ -10,6 +10,7 @@ function App() {
     const fetchCandidate = async() =>{
       try{
         const data = await Candidate('licha.sanchez.30@hotmail.com')
+        console.log(data)
         setCandidato(data)
 
       } catch(err){
@@ -31,11 +32,37 @@ function App() {
 
     fetchJobsList()
   },[])
-    const submitApplication = (positionId, repoUrl) => {
-    console.log("Applying to:", positionId)
-    console.log("Repo:", repoUrl)
+
+  const submitApplication = async (positionId, repoUrl) =>{
+    if(!candidato){
+      alert("Candidato no encontrado")
+      return
+    }
+    const payload = {
+  uuid: candidato.uuid,
+  jobId: positionId,
+  candidateId: candidato.candidateId,
+  applicationId: candidato.applicationId,
+  repoUrl
+}
+console.log("BODY QUE SE ENVÍA:", payload)
+    try{
+      const result = await ApplyJob({
+        uuid: candidato.uuid,
+        jobId: positionId,
+        candidateId: candidato.candidateId,
+        applicationId: candidato.applicationId,
+        repoUrl
+    })
+
+    console.log(result)
+    alert("Postulación enviada correctamente")
     
+    }catch(err){
+      console.log(err)
+    }
   }
+
   return (
     <div style={{ maxWidth: "600px", margin: "0 auto" }}>
       <h1>Posiciones</h1>

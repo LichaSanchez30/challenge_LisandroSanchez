@@ -26,3 +26,34 @@ export const JobsList = async () =>{
     return response.json()
 }
 
+
+
+export const ApplyJob = async ({
+    uuid,
+    jobId,
+    candidateId,
+    applicationId,
+    repoUrl
+}) =>{
+    const response = await fetch(`${BASE_URL}/api/candidate/apply-to-job`, {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            uuid,
+            jobId,
+            candidateId,
+            applicationId,
+            repoUrl
+        })
+    })
+
+    const data = await response.json()
+
+    if(!response.ok){
+        throw new Error(JSON.stringify(data))
+    }
+
+    return data
+}

@@ -11,7 +11,6 @@ function PositionItem({position, onSubmit}){
         }
 
         onSubmit(position.id, repoUrl)
-        setRepoUrl("")
     }
     return(
         <div style={styles.card}>
